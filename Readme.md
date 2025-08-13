@@ -1,19 +1,13 @@
-Here's a complete and professional `README.md` that **clearly explains your project idea**, and **individually explains how Prompting, Structured Output, Function Calling, and RAG (Retrieval-Augmented Generation)** are implemented — all without LangChain.
 
----
-
-### ✅ Final `README.md` (With AI Concepts Explained)
-
-````markdown
 # 🎓 Study Buddy – Personalized AI Learning Mentor
 
 **Study Buddy** is a full-stack AI-powered web application built for students. It helps them:
 - Generate subject-wise study plans,
-- Solve academic doubts using GPT,
+- Solve academic doubts using AI,
 - Create flashcards and quizzes from topics or notes,
 - Ask questions from uploaded PDF notes using RAG.
 
-The application uses OpenAI's GPT-4 API and Embeddings to power its AI capabilities. **No LangChain** is used — all features are implemented using direct API calls and custom logic (Node.js, Express, MongoDB, FAISS, etc.).
+The application uses Gemini API and Embeddings to power its AI capabilities. **No LangChain** is used — all features are implemented using direct API calls and custom logic (Node.js, Express, MongoDB, FAISS, etc.).
 
 ---
 
@@ -26,7 +20,7 @@ To build a **personalized study assistant** that can:
 3. **Generate flashcards** (Q&A pairs) for revision.
 4. **Generate quizzes (MCQs)** automatically.
 5. **Use PDF notes** to answer user queries via custom **RAG** (Retrieval-Augmented Generation).
-6. **Do everything via OpenAI APIs without LangChain**, maintaining full control over logic and output.
+6. **Do everything via GeminiAI APIs without LangChain**, maintaining full control over logic and output.
 
 ---
 
@@ -38,7 +32,7 @@ This project demonstrates the use of advanced AI techniques in a real-world appl
 
 ### 📌 1. Prompting
 
-We use **carefully engineered prompts** to guide GPT-4’s behavior. These prompts are sent directly to the OpenAI API based on user intent. Each prompt is custom-formatted for its use case.
+We use **carefully engineered prompts** to guide -AI4’s behavior. These prompts are sent directly to the GeminiAI API based on user intent. Each prompt is custom-formatted for its use case.
 
 #### Example:
 - **Study Plan Prompt:**
@@ -52,13 +46,13 @@ Create a detailed 7-day study plan for Class 12 Physics and Chemistry. Return as
 Explain this concept to a class 12 student: "What is Kirchhoff's Law?"
 ```
 
-We craft prompts based on user inputs and route types (plan, quiz, flashcards, etc.) to make GPT behave like a structured tutor.
+We craft prompts based on user inputs and route types (plan, quiz, flashcards, etc.) to make AI behave like a structured tutor.
 
 ---
 
 ### 📌 2. Structured Output
 
-To ensure the AI's output can be parsed and used in the frontend easily, we ask GPT to return **strictly structured JSON output**. This ensures seamless UI integration and reduces hallucination.
+To ensure the AI's output can be parsed and used in the frontend easily, we ask AI to return **strictly structured JSON output**. This ensures seamless UI integration and reduces hallucination.
 
 #### Example Prompts:
 
@@ -88,7 +82,7 @@ This structured format is parsed in the backend and directly sent to the fronten
 
 ### 📌 3. Function Calling (Manual)
 
-Instead of AI's built-in "function calling" feature or LangChain, we implement **manual function routing** using simple logic based on request type.
+Instead of GeminiAI's built-in "function calling" feature or LangChain, we implement **manual function routing** using simple logic based on request type.
 
 #### Implementation:
 
@@ -115,7 +109,7 @@ We **simulate function calling** using manual prompt routing, so we have full co
 
 ### 📌 4. RAG (Retrieval-Augmented Generation)
 
-We implement RAG manually using Gemini’s **embedding models** and **FAISS** for vector search.
+We implement RAG manually using GeminiAI’s **embedding models** and **FAISS** for vector search.
 
 #### Workflow:
 
@@ -123,7 +117,7 @@ We implement RAG manually using Gemini’s **embedding models** and **FAISS** fo
 2. 🔍 **Generate embeddings** using `text-embedding-3-small`
 3. 💾 **Store vectors** using `FAISS` locally
 4. ❓ **Ask question** → search top-k relevant chunks
-5. 🧠 **Send context + user question** to Gemini:
+5. 🧠 **Send context + user question** to AI:
 
 ```text
 Use the following notes to answer the question:
@@ -140,7 +134,7 @@ This lets the AI "remember" the uploaded notes and answer questions based on the
 | Layer       | Tech                      |
 | ----------- | ------------------------- |
 | Backend     | Node.js + Express.js      |
-| AI Models   |  GEMINI AI + Embeddings |
+| AI Models   | GeminiAI AI + Embeddings |
 | PDF Parsing | `pdf-parse`               |
 | Vector DB   | FAISS                     |
 | Frontend    | React (optional)          |
@@ -152,7 +146,7 @@ This lets the AI "remember" the uploaded notes and answer questions based on the
 ## 🔐 .env Setup
 
 ```env
-OPENAI_API_KEY=your_openai_key
+GeminiAI_API_KEY=your_GeminiAI_key
 MONGO_URI=mongodb+srv://...
 JWT_SECRET=your_jwt_secret
 VECTOR_STORE_PATH=./vectors
@@ -167,7 +161,7 @@ VECTOR_STORE_PATH=./vectors
 ├── controllers/
 ├── routes/
 ├── services/
-│   ├── openaiService.js
+│   ├── GeminiAIService.js
 │   ├── embeddingService.js
 │   ├── pdfService.js
 ├── utils/
