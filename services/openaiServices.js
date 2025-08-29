@@ -5,9 +5,9 @@ const openai = new OpenAI({
 });
 
 /**
- * Generates a response from GPT-4 using a system and user prompt.
+ * Generates a response from GPT-4 and logs the token usage.
  * @param {string} systemPrompt - The instruction that defines the AI's role.
- * @param {string} userPrompt - The user's specific request, which includes CoT instructions.
+ *  @param {string} userPrompt - The user's specific request.
  * @returns {Promise<string>} - The AI's generated text response.
  */
 async function generateResponse(systemPrompt, userPrompt) {
@@ -18,13 +18,20 @@ async function generateResponse(systemPrompt, userPrompt) {
         { "role": "system", "content": systemPrompt },
         { "role": "user", "content": userPrompt }
       ],
-      // Use a low temperature for logical reasoning tasks
-      temperature: 0.2,
-      // Allow more tokens for a detailed, step-by-step explanation
-      max_tokens: 1000,
+      temperature: 0.5,
+      max_tokens: 250,
     });
 
-    console.log("Token Usage:", response.usage);
+    // --- THIS IS THE KEY IMPLEMENTATION ---
+    // The 'response' object from OpenAI includes a 'usage' field.
+    // We log this field to the console to make the token count visible.
+    console.log("--- TOKEN USAGE ---");
+    console.log(`Prompt Tokens: ${response.usage.prompt_tokens}`);
+    console.log(`Completion Tokens: ${response.usage.completion_tokens}`);
+    console.log(`Total Tokens: ${response.usage.total_tokens}`);
+    console.log("---------------------");
+    // ------------------------------------
+
     return response.choices[0].message.content;
   } catch (error) {
     console.error("Error calling OpenAI API:", error);
