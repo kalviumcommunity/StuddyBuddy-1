@@ -5,33 +5,27 @@ const openai = new OpenAI({
 });
 
 /**
- * Generates a response from GPT-4 and logs the token usage.
+ * Generates a structured JSON response from GPT-4.
  * @param {string} systemPrompt - The instruction that defines the AI's role.
- *  @param {string} userPrompt - The user's specific request.
- * @returns {Promise<string>} - The AI's generated text response.
+ * @param {string} userPrompt - The user's specific request.
+ * @returns {Promise<string>} - The AI's generated text response, guaranteed to be a JSON string.
  */
-async function generateResponse(systemPrompt, userPrompt) {
+async function generateStructuredResponse(systemPrompt, userPrompt) {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      // Use a model that supports JSON mode (e.g., gpt-4-1106-preview, gpt-3.5-turbo-1106)
+      model: "gpt-4-1106-preview", 
       messages: [
         { "role": "system", "content": systemPrompt },
         { "role": "user", "content": userPrompt }
       ],
-      temperature: 0.5,
-      max_tokens: 250,
+      // --- THIS IS THE KEY IMPLEMENTATION ---
+      // This parameter forces the model to return a valid JSON object.
+      response_format: { type: "json_object" },
+      // ------------------------------------
     });
 
-    // --- THIS IS THE KEY IMPLEMENTATION ---
-    // The 'response' object from OpenAI includes a 'usage' field.
-    // We log this field to the console to make the token count visible.
-    console.log("--- TOKEN USAGE ---");
-    console.log(`Prompt Tokens: ${response.usage.prompt_tokens}`);
-    console.log(`Completion Tokens: ${response.usage.completion_tokens}`);
-    console.log(`Total Tokens: ${response.usage.total_tokens}`);
-    console.log("---------------------");
-    // ------------------------------------
-
+    console.log("Token Usage:", response.usage);
     return response.choices[0].message.content;
   } catch (error) {
     console.error("Error calling OpenAI API:", error);
@@ -39,4 +33,4 @@ async function generateResponse(systemPrompt, userPrompt) {
   }
 }
 
-module.exports = { generateResponse };
+module.exports = { generateStructuredResponse };
