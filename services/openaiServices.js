@@ -18,8 +18,8 @@ async function generateResponse(systemPrompt, userPrompt) {
         { "role": "system", "content": systemPrompt },
         { "role": "user", "content": userPrompt }
       ],
-      temperature: 0.3,
-      max_tokens: 500,
+      temperature: 0.4, // A bit of creativity for good distractors, but still factual
+      max_tokens: 1024, // Allow for longer responses for a full quiz
     });
 
     console.log("Token Usage:", response.usage);
