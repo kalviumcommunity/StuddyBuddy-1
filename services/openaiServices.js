@@ -7,7 +7,7 @@ const openai = new OpenAI({
 /**
  * Generates a response from GPT-4 using a system and user prompt.
  * @param {string} systemPrompt - The instruction that defines the AI's role.
- * @param {string} userPrompt - The user's specific request, which may include examples.
+ * @param {string} userPrompt - The user's specific request, which includes CoT instructions.
  * @returns {Promise<string>} - The AI's generated text response.
  */
 async function generateResponse(systemPrompt, userPrompt) {
@@ -18,8 +18,10 @@ async function generateResponse(systemPrompt, userPrompt) {
         { "role": "system", "content": systemPrompt },
         { "role": "user", "content": userPrompt }
       ],
-      temperature: 0.4, // A bit of creativity for good distractors, but still factual
-      max_tokens: 1024, // Allow for longer responses for a full quiz
+      // Use a low temperature for logical reasoning tasks
+      temperature: 0.2,
+      // Allow more tokens for a detailed, step-by-step explanation
+      max_tokens: 1000,
     });
 
     console.log("Token Usage:", response.usage);
